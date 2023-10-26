@@ -27,7 +27,7 @@ noteRouter.patch("/update/:noteid",async(req,res)=>{
   const {noteID}=req.params;
   const note=await NoteModel.findOne({_id:noteID})
   try{
-  if(note){
+  if(req.body.userID==note.userID){
     await NoteModel.findByIdandUpdate({_id:noteID},req.body)
     res.status(200).send({"msg":`The note with ID: ${noteID} has been updated`})
   }
@@ -44,7 +44,7 @@ noteRouter.patch("/delete/:noteid",async(req,res)=>{
   const {noteID}=req.params;
   const note=await NoteModel.findOne({_id:noteID})
   try{
-  if(note){
+  if(req.body.userID==note.userID){
     await NoteModel.findByIdandDelete({_id:noteID},req.body)
     res.status(200).send({"msg":`The note with ID: ${noteID} has been deleted`})
   }
