@@ -7,15 +7,11 @@ userRouter.post('/register',(req,res)=>{
     const {username,email,pass}=req.body
     
     try{
-        console.log(1)
         bcrypt.hash(pass,5,async(err,hash)=>{
-            console.log(2)
             if(err){
-                console.log(3)
                 res.status(200).send({"err":err})
             }
             else{
-                console.log(4)
                 const user=new UserModel({username:username,email:email,pass:hash})
                 await user.save()
                 res.status(200).send({"msg":"A user has been registered"})
@@ -37,7 +33,6 @@ userRouter.post("/login",async(req,res)=>{
             if(result){
                 const token=jwt.sign({username:user.userName,userid:user.id},"masai")
                 res.status(200).send({"msg":"Login Successfull","token":token})
-
             }
             else{
                 res.status(200).send({"msg":"wrong Credentials"})
