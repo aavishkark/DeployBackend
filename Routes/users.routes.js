@@ -5,22 +5,26 @@ const jwt=require("jsonwebtoken")
 const bcrypt=require('bcrypt')
 userRouter.post('/register',(req,res)=>{
     const {username,email,pass}=req.body
-    console.log(req.body)
+    
     try{
+        console.log(1)
         bcrypt.hash(pass,5,async(err,hash)=>{
+            console.log(2)
             if(err){
-                console.log("Hiii",err)
+                console.log(3)
                 res.status(200).send({"err":err})
             }
             else{
+                console.log(4)
                 const user=new UserModel({userName:username,email:email,pass:hash})
                 await user.save()
                 res.status(200).send({"msg":"A user has been registered"})
             }
         })
     }
-    catch{
-
+    catch(err){
+        console.log(err)
+      res.status(400).send({"err":err})
     }
 })
 userRouter.post("/login",async(req,res)=>{
