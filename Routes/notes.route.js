@@ -40,7 +40,7 @@ noteRouter.patch("/update/:noteid",async(req,res)=>{
   }
     
 })
-noteRouter.patch("/delete/:noteid",async(req,res)=>{
+noteRouter.delete("/delete/:noteid",async(req,res)=>{
   const {noteID}=req.params;
   const note=await NoteModel.findOne({_id:noteID})
   try{

@@ -4,10 +4,10 @@ const userRouter=express.Router()
 const jwt=require("jsonwebtoken")
 const bcrypt=require('bcrypt')
 userRouter.post('/register',(req,res)=>{
-    const {username,email,password}=req.body
+    const {username,email,pass}=req.body
     console.log(req.body)
     try{
-        bcrypt.hash(password,5,async(err,hash)=>{
+        bcrypt.hash(pass,5,async(err,hash)=>{
             if(err){
                 console.log("Hiii",err)
                 res.status(200).send({"err":err})
