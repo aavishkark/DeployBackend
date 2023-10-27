@@ -4,10 +4,12 @@ const userRouter=express.Router()
 const jwt=require("jsonwebtoken")
 const bcrypt=require('bcrypt')
 userRouter.post('/register',(req,res)=>{
-    const {username,email,pass}=req.body
+    const {username,email,password}=req.body
+    console.log(req.body)
     try{
-        bcrypt.hash(pass,5,async(err,hash)=>{
+        bcrypt.hash(password,5,async(err,hash)=>{
             if(err){
+                console.log("Hiii",err)
                 res.status(200).send({"err":err})
             }
             else{
@@ -23,8 +25,10 @@ userRouter.post('/register',(req,res)=>{
 })
 userRouter.post("/login",async(req,res)=>{
     const {email,pass}=req.body
+    console.log(email,pass)
     try{
         const user=await UserModel.findOne({email})
+        console.log(user)
         bcrypt.compare(pass,user.pass,(err,result)=>{
             if(result){
                 const token=jwt.sign({username:user.userName,userid:user.id},"masai")
