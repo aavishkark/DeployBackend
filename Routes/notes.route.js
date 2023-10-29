@@ -23,12 +23,12 @@ noteRouter.get("/",async(req,res)=>{
     }
 })
 noteRouter.patch("/update/:noteid",async(req,res)=>{
-  const {noteID}=req.params;
-  const note=await NoteModel.findOne({_id:noteID})
+  const {noteid}=req.params;
+  const note=await NoteModel.findOne({_id:noteid})
   try{
-  if(req.body.userID==note.userID){
-    await NoteModel.findByIdandUpdate({_id:noteID},req.body)
-    res.status(200).send({"msg":`The note with ID: ${noteID} has been updated`})
+  if(note!=undefined){
+    await NoteModel.findByIdandUpdate({_id:noteid},req.body)
+    res.status(200).send({"msg":`The note with ID: ${noteid} has been updated`})
   }
   else{
     res.status(200).send({"msg":"You are not authorized"})
