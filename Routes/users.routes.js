@@ -25,13 +25,11 @@ userRouter.post('/register',(req,res)=>{
 })
 userRouter.post("/login",async(req,res)=>{
     const {email,pass}=req.body
-    console.log(email,pass)
     try{
         const user=await UserModel.findOne({email})
-        console.log(user)
         bcrypt.compare(pass,user.pass,(err,result)=>{
             if(result){
-                const token=jwt.sign({username:user.userName,userid:user.id},"masai")
+                const token=jwt.sign({username:user.username,userid:user.id},"masai")
                 res.status(200).send({"msg":"Login Successfull","token":token})
             }
             else{

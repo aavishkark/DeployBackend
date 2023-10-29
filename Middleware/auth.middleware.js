@@ -1,7 +1,6 @@
 const jwt=require("jsonwebtoken")
 const auth=(req,res,next)=>{
     const token=req.headers.token?.split(" ")[1]
-    console.log(token)
     if(token){
         jwt.verify(token,"masai",(err,decoded)=>{
             if(decoded){

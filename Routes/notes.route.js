@@ -2,7 +2,6 @@ const express=require('express')
 const noteRouter=express.Router()
 const {NoteModel}=require("../Model/note.model")
 const {auth}=require('../Middleware/auth.middleware')
-const noterouter=express.Router()
 noteRouter.use(auth)
 noteRouter.post("/create",async(req,res)=>{
   try{
@@ -41,12 +40,15 @@ noteRouter.patch("/update/:noteid",async(req,res)=>{
     
 })
 noteRouter.delete("/delete/:noteid",async(req,res)=>{
-  const {noteID}=req.params;
-  const note=await NoteModel.findOne({_id:noteID})
+  const {noteid}=req.params;
+  const note=await NoteModel.findOne({_id:noteid})
+  // console.log(note._id,`new ObjectId(${noteid})`)
+  // console.log(note._id==`new ObjectId("${noteid}")`)
   try{
-  if(req.body.userID==note.userID){
-    await NoteModel.findByIdandDelete({_id:noteID},req.body)
-    res.status(200).send({"msg":`The note with ID: ${noteID} has been deleted`})
+  if(note!=undefined){
+    console.log("Hiii",noteid)
+    await NoteModel.findByIdAndDelete(noteid)
+    res.status(200).send({"msg":`The note with ID: ${noteid} has been deleted`})
   }
   else{
     res.status(200).send({"msg":"You are not authorized"})
